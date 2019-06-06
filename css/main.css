@@ -87,6 +87,7 @@ li:hover {text-shadow: 0.2vw 0.2vh #71797c;}
 .box-row {
 
   width: 100%;
+  height: 12vw; /* should not be necessary ?? */
   display: flex;
   flex-direction: row;
   justify-content: center;
