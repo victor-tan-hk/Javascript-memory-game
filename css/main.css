@@ -1,0 +1,52 @@
+body, section {
+  width: 100%;
+}
+
+/*
+Set 900px to be the limit for the width of the display area for this game
+For screen-sizes larger than this, the display area remains fixed */
+
+main, header, footer {
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
+
+}
+
+/* Styling for game icon and game title placed in header. Icon is bundled together with a  drop down menu in the dropdown div.
+*/
+
+header {
+  margin-bottom: 0px;
+  display: flex;
+  flex-direction: row;
+}
+
+#game-title {
+  width: 92%;
+  text-align: center;
+}
+
+
+/* CSS to scale fonts for different text in the game */
+
+#game-title {
+  font-family: 'Volkhov', serif;
+  font-size: calc(14px + (30 - 14) * ((100vw - 300px) / (900 - 300)));
+  line-height: 0em;
+  letter-spacing: 1.5vw;
+}
+
+/*
+Media queries to ensure that the following items and fonts do not continue to scale once the screen size reaches the earlier defined limit of 900 px.
+*/
+
+@media screen and (min-width: 900px) {
+
+  #game-title {
+    font-size: 30px;
+  }
+
+
+
+}
