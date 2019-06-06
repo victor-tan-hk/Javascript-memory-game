@@ -5,6 +5,9 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/main.css"  rel="stylesheet" />
+
+    <link href="https://fonts.googleapis.com/css?family=Inconsolata|Volkhov|Fredoka+One" rel="stylesheet">
+
   </head>
   <body>
 
@@ -12,20 +15,30 @@
     <!-- Game title and logo placed in the header -->
     <header>
 
-        Game title and logo goes here
+    <div class="dropdown">
+      <img id="game-logo" src="images/brainlogo.jpg" alt="Main logo for memory game">
+      <div class="dropdown-content">
+        <ul>
+          <li class="inconsolata-scalable">DIFFICULTY</li>
+          <li class="inconsolata-scalable">ICONS</li>
+          <li class="inconsolata-scalable">SCORES</li>
+        </ul>
+      </div>
+      </div>      
+
+      <p id="game-title">MEMORY GAME</p>
 
     </header>
 
     <main>
 
-        Main body of the game
-
+      Main body of the game
 
     </main>
 
 
     <footer>
-        Basic footer info
+      Basic footer info
     </footer>
 
     <script src="js/app.js"></script>
