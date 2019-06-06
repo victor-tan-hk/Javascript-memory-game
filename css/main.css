@@ -69,7 +69,79 @@ li {
 
 li:hover {text-shadow: 0.2vw 0.2vh #71797c;}
 
+/* Styling for the main game area and the rows of flip boxes in it */
 
+#main-game-area {
+  width: 80%;
+  margin: auto;
+  background-color: #7ee2a8;
+  padding: 2vw 0px;
+
+  border-width: 2px;
+  border-color: #03502a;
+  border-style:inset;
+  border-radius: 3vh;
+  box-shadow: 1vw 1vw 1vw grey;
+}
+
+.box-row {
+
+  width: 100%;
+  height: 12vw; /* should not be necessary ?? */
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+}
+
+/* Styling for the card boxes flip animation
+*/
+
+
+.flip-box {
+  background-color: transparent;
+  width: 15%;
+  max-width: 85px;
+  margin: 0.7vh;
+  perspective: 1000px;
+}
+
+.flip-box-inner, .flip-box-front, .flip-box-back, .box-images {
+  width: 100%;
+}
+
+/* This container is needed to position the front and back side */
+.flip-box-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+}
+
+/* Position the front and back side */
+.flip-box-front, .flip-box-back {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+}
+
+/* Style the front side (fallback if image is missing) */
+.flip-box-front {
+  background-color: #bbb;
+  color: black;
+}
+
+/* Style the back side */
+.flip-box-back {
+  background-color: dodgerblue;
+  color: white;
+  transform: rotateY(180deg);
+}
+
+.flip-box:hover {cursor: pointer;}
 
 
 /* CSS to scale fonts for different text in the game */
