@@ -144,6 +144,30 @@ li:hover {text-shadow: 0.2vw 0.2vh #71797c;}
 .flip-box:hover {cursor: pointer;}
 
 
+/* CSS to style the 2 main buttons used in the game
+
+Start/Restart button in the main game play area
+Submit button in the high score modal
+
+*/
+
+.button-style {
+  display: block;
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 5px 15px;
+  text-align: center;
+  text-decoration: none;
+  color: white;
+  background-color: #2eb52e;
+  border-radius: 15px;
+  box-shadow: 0 0.2em #c1b2b2;
+  font-family: 'Verdana', sans-serif;
+  font-size: calc(12px + (20 - 12) * ((100vw - 300px) / (900 - 300)));
+}
+
+
 /* CSS to scale fonts for different text in the game */
 
 #game-title {
@@ -169,6 +193,8 @@ Media queries to ensure that the following items and fonts do not continue to sc
     font-size: 30px;
   }
 
-
+  .button-style {
+    font-size: 20px;
+  }
 
 }
