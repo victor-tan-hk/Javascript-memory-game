@@ -416,6 +416,14 @@ function resetStars() {
 
 /* Global variables */
 
+/* Constant used for the difficulty level settings */
+
+const DIFFICULTY_LEVELS = [
+  { name: 'EASY', numSymbolsToMatch : 2, highScoreList: []},
+  { name: 'HARD', numSymbolsToMatch : 3, highScoreList: []},
+  { name: 'INSANE', numSymbolsToMatch : 4, highScoreList: []},
+
+];
 
 /* Constant used for the icon group game settings */
 
