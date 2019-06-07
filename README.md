@@ -32,8 +32,13 @@ This metric is visualized by highlighting the appropriate number of stars in the
 
 These features are accessible from the game icon at the upper right hand corner.
 
+1. *Difficulty levels*: There are three levels possible: Easy, Hard and Insane.
+   - Easy: The player needs to match icons on 2 consecutively flipped cards. There are a total of 2 x 8 = 16 cards
+   - Hard: The player needs to match icons on 3 consecutively flipped cards. There are a total of 3 x 8 = 24 cards
+   - Insane: The player needs to match icons on 4 consecutively flipped cards. There are a total of 4 x 8 = 32 cards
 
-1. *Icon family*: The player can select between 3 different icon families: each family has a different set of 8 icons that follow a particular theme. This adds variety to the game play.
+
+2. *Icon family*: The player can select between 3 different icon families: each family has a different set of 8 icons that follow a particular theme. This adds variety to the game play.
 
 
 ## Running the game
