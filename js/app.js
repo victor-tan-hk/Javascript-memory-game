@@ -438,7 +438,7 @@ const ICON_GROUPS = [
 image base directory for the selected icon group
 */
 
-let currentLevel = { name: 'EASY', numSymbolsToMatch : 2, highScoreList: []};
+let currentLevel = DIFFICULTY_LEVELS[0];
 let currentBaseUrl = 'images/social/';
 
 
@@ -563,6 +563,14 @@ for (let option of imageOptions) {
     modalToOpen.style.display = "none";
 
     let chosenOption = this.querySelector("p").textContent;
+
+
+    for (let level of DIFFICULTY_LEVELS) {
+      if (level.name === chosenOption) {
+        currentLevel = level;
+        startGame();
+      }
+    }    
 
     for (let group of ICON_GROUPS) {
       if (group.name === chosenOption) {
