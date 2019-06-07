@@ -191,8 +191,79 @@ function doFlip() {
 
   if (!this.classList.contains('flipped')) {
     this.classList.add('flipped');
+    setTimeout(checkMatch,1000, this);
+
   }
 }
+
+
+/**
+* @description Check whether the most recently flipped box (currFlipBox)
+has a symbol that matches the existing flipped boxes. It then calls the
+appropriate function to handle the case of
+
+- a mismatch
+- a successful match for the predefined number of consecutive symbols (2,3 or 4)
+
+It computes the match average and calls the function to highlight the appropriate number of stars for this average
+
+If all boxes are flipped and all symbols are successfully matched, the function
+to handle the game end is called
+
+* @param {Element} currFlipBox
+*/
+
+
+function checkMatch(currFlipBox) {
+
+  //alert('checking !');
+
+  let currImgURL = currFlipBox.getElementsByTagName('img')[1].getAttribute('src');
+  boxesFlipped.push(currFlipBox);
+  numBoxFlipped++;
+
+  if (numBoxFlipped == 1) {
+    imgToMatch = currImgURL;
+  } else if (currImgURL !== imgToMatch) {
+      showErrorSymbol();
+  } else if (numBoxFlipped === currentLevel.numSymbolsToMatch) {
+      ++successfulMatch;
+      console.log("Matched : " + successfulMatch)
+      resetVariables();
+  }
+
+  if (successfulMatch == NUM_DIFF_IMAGES)
+    console.log("End of game ! All images matched !");
+}
+
+
+/**
+* @description Puts an error image on the existing flipped boxes whose
+symbols do not match. Sets a timeout to flip these boxes back to the
+original closed card symbol.
+*/
+
+function showErrorSymbol() {
+  //alert(boxesFlipped.length);
+
+  console.log("Error ! No match");
+
+  resetVariables();
+
+
+
+}
+
+/**
+* @description Resets the two variables used to keep track of the number of boxes
+that have been flipped as well as the references to those flipped boxes
+*/
+
+function resetVariables() {
+  numBoxFlipped = 0;
+  boxesFlipped.length = 0;
+}
+
 
 /* Global variables */
 
