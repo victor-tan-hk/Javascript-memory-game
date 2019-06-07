@@ -204,6 +204,62 @@ function startGame() {
 }
 
 
+
+/**
+* @description Use regular expression to extract the time and minute substrings
+Then concatenate them and return the string as a number.
+
+E.g.
+2m 30s is returned as 230
+0m 10s is returned as 10
+1m 05s is returned as 105
+
+* @param {string} timeString
+* @returns {number} The concatenated strings as a number
+*/
+
+function getTimeAsNumber(timeString) {
+
+  let numbers = timeString.match(/\d+/g);
+  return Number(numbers[0] + numbers[1]);
+
+}
+
+/**
+* @description A customized function used in conjuction with the array
+sort method to sort an array of score items which are objects with
+the following format:
+
+{name: 'Jane',score: '1m : 10s'}
+{name: 'Peter',score: '5m : 04s'}
+...
+....
+
+* @param {object} a
+* @param {object} b
+
+* @returns {number} Either 1, -1 or 0
+*/
+
+function sortHighScores(a, b) {
+
+  if (a.score.length === 0)
+    return 1;
+  if (b.score.length === 0)
+    return -1;
+
+  scoreA = getTimeAsNumber(a.score);
+  scoreB = getTimeAsNumber(b.score);
+
+  if (scoreA > scoreB)
+    return 1;
+  if (scoreA < scoreB)
+    return -1;
+
+  return 0;
+}
+
+
 /**
 * @description Performs the flip animation on a clicked flip box
 by adding flipped to its class attribute so that the appropiate
@@ -242,8 +298,12 @@ function endGame() {
     elem.textContent = timerElement.textContent;
   }
 
-  normalEndModal.style.display = "block";
+  posToInsertHighScore = findPosToInsert(timerElement.textContent);
 
+  if (posToInsertHighScore >= 0)
+    highScoreEndModal.style.display = "block";
+  else
+    normalEndModal.style.display = "block";
 
 }
 
@@ -421,6 +481,85 @@ function resetStars() {
   }
 }
 
+
+
+
+/**
+* @description This function goes through the high score array for the current
+difficulty level, and determines the index position in this array to
+insert the current time score (currentScore). It returns -1 to
+indicate that the current score does not qualify to go into the
+array
+
+* @param {string} The time for the current game
+* @returns {number} The insert position into the high score array
+*/
+
+function findPosToInsert(currentScore) {
+
+  for (let arrPos = 0; arrPos < MAX_SCORE_ITEMS; arrPos++) {
+    scoreToCompare = currentLevel.highScoreList[arrPos].score;
+    if (!scoreToCompare)
+      return arrPos;
+    if (getTimeAsNumber(currentScore) < getTimeAsNumber(scoreToCompare))
+      return arrPos;
+  }
+  return -1;
+}
+
+
+/**
+* @description This function updates the appropriate HTML elements
+in the high score modal box with the high scores for all difficulty
+levels
+*/
+
+function updateHighScoreTables() {
+
+  for (let table of scoreTables) {
+    let tableId = table.getAttribute("id");
+    for (let level of DIFFICULTY_LEVELS) {
+      if (tableId.indexOf(level.name) >= 0) {
+        let tblData = table.querySelectorAll('td');
+
+        for (let arrPos = 0; arrPos < MAX_SCORE_ITEMS; arrPos++) {
+          if (level.highScoreList[arrPos].name)
+            tblData[arrPos*2].textContent = level.highScoreList[arrPos].name;
+          else
+            tblData[arrPos*2].textContent = '---';
+
+          if (level.highScoreList[arrPos].score)
+            tblData[(arrPos*2)+1].textContent = level.highScoreList[arrPos].score;
+          else
+            tblData[(arrPos*2)+1].textContent = '---';
+
+        }
+      }
+    }
+  }
+
+}
+
+/**
+* @description This function loads the high score lists with the existing
+values stored from previous games in the same browser using JS
+localStorage.
+*/
+
+function loadHighScoreLists() {
+
+  for (let level of DIFFICULTY_LEVELS) {
+
+    for (let arrPos = 0; arrPos < MAX_SCORE_ITEMS; arrPos++) {
+      level.highScoreList[arrPos] = {name: '',score: ''};
+      
+    }
+  }
+
+}
+
+
+
 /* Global variables */
 
 /* Constant used for the difficulty level settings */
@@ -464,6 +603,9 @@ in the main game play area
 const TOTAL_ROWS = 4;
 const NUM_DIFF_IMAGES = 8;
 
+/* The number of top scores that the game keeps track of */
+
+const MAX_SCORE_ITEMS = 3;
 
 /* For use by developer to help in debugging and testing existing code
 When set to true
@@ -503,6 +645,11 @@ for (let elem of starsElements) {
   starsSpan.push(elem.getElementsByTagName('span'));
 }
 
+/* Get reference to the table element to display high scores in the
+high score modal box  */
+
+let scoreTables = document.getElementsByTagName('table');
+
 /* Predefined game time (in secs) to assist in the count up timer
 Assume the game will never last longer than 30 mins
 */
@@ -531,6 +678,10 @@ let gameTimer = new Timer({
   },
 });
 
+// Initialize the high score lists and update the tables with it
+
+loadHighScoreLists();
+updateHighScoreTables();
 
 /* Get a reference to the start button and set event listener to respond
 to click events to start / restart the game
@@ -587,6 +738,26 @@ for (let option of imageOptions) {
 
   });
 }
+
+/* Get references to necessary elements for the high score modal */
+
+let highScoreEndModal = document.getElementById("highscore-end-modal");
+let userName = document.getElementById('user-name');
+
+/* Set submit button to respond to click from user in high score modal
+
+This will update the internal high score list, followed by the text in
+the relevant HTML elements in the high score modal box, and then finally
+save the high score list to the browser
+
+*/
+
+let submitButton = document.getElementById('submit-button');
+submitButton.addEventListener('click', function() {
+  updateHighScoreList();
+  updateHighScoreTables();
+  saveHighScoreList();
+});
 
 
 /* Get references to the following modals
