@@ -177,6 +177,9 @@ function startGame() {
     flipBox.addEventListener('click', doFlip);
   }  
 
+  // Start count down timer for game
+  gameTimer.start(gameTime);  
+
 }
 
 
@@ -190,10 +193,30 @@ this box matches with existing flipped boxes.
 function doFlip() {
 
   if (!this.classList.contains('flipped')) {
+    movesElement.textContent = "Moves: "+ ++numMoves;
     this.classList.add('flipped');
     setTimeout(checkMatch,1000, this);
 
   }
+}
+
+/**
+* @description Handles the end of the game where all boxes are flipped
+and all symbols successfully matched.
+
+The count up is stopped and the time is displayed in the appropriate
+element in the relevant modal boxes and main game view
+
+If the time qualifies for a high score, the high score modal is displayed
+otherwise a normal end of game modal is displayed
+*/
+
+function endGame() {
+
+  gameTimer.stop();
+  console.log("end of game reached !");
+
+
 }
 
 
@@ -230,8 +253,67 @@ function checkMatch(currFlipBox) {
       resetVariables();
   }
 
+  matchAverage = Math.floor(successfulMatch/numMoves*100);
+
+  doStarsHighlight();
+
+
   if (successfulMatch == NUM_DIFF_IMAGES)
-    console.log("End of game ! All images matched !");
+    endGame();
+}
+
+/**
+* @description Highlight the stars for all modal boxes as well as the game view
+that they appear in.
+
+matchAverage = successfulMatches / numMoves * 100
+
+Since the fastest a successful match can occur is in 2 moves (for the case of
+2 consecutive symbols), the highest possible value for matchAverage at any
+single time is 50.
+
+The stars highlighted depend on the value of matchAverage
+
+10-19: 2
+20-29: 3
+30-39: 4
+40-50: 5
+
+There is at least one star highlighted regardless of the value of matchAverage
+
+//TODO: need to further refine the matchAverage scale above for the case of 3
+ (Difficulty: HARD) and 4 (Difficulty: INSANE) consecutive matches.
+ For e.g. the fastest a successful match can occur is 3 moves for the case of
+ 3 consecutive symbols, which means the highest possible value of matchAverage
+ is 33.33. The range for the 5 stars must then fall in that category, e.g.
+
+ 6 - 12: 2
+ 13 - 18: 3
+ 19 - 25: 4
+ 26 - 33: 5
+
+ Equivalent comments apply as well for 4 consecutive matches.
+
+*/
+
+function doStarsHighlight() {
+
+  for (let theStars of starsSpan) {
+
+    for (let arrPos = 1; arrPos < theStars.length; arrPos++) {
+
+      if (matchAverage >= (arrPos*10) ) {
+        if (!theStars[arrPos].classList.contains("checked"))
+          theStars[arrPos].classList.add("checked");
+      } else {
+        if (theStars[arrPos].classList.contains("checked"))
+          theStars[arrPos].classList.remove("checked");
+      }
+
+    }
+
+  }
+
 }
 
 
@@ -347,6 +429,48 @@ let gameStarted = false;
 let numMoves = 0;
 let flipBoxes;
 let posToInsertHighScore;
+
+/* Get reference to the elements that will be used to display info during game play */
+let difficultyElement = document.getElementById("level-text-main");
+let timerElement = document.getElementById("timer-text");
+let movesElement = document.getElementById("moves-text");
+let ratingElement = document.getElementById("rating-text");
+
+/* Get reference to the span element for all  5 stars for all occurrences of  this icon in the HTML */
+
+let starsElements = document.getElementsByClassName("stars-part");
+let starsSpan = [];
+for (let elem of starsElements) {
+  starsSpan.push(elem.getElementsByTagName('span'));
+}
+
+/* Predefined game time (in secs) to assist in the count up timer
+Assume the game will never last longer than 30 mins
+*/
+
+let gameTime = 60 * 30;
+
+/* Set up count up timer functionality using the Timer.js countdown 
+timer library. To implement a count up, subtract the current countdown 
+time from gameTime.
+*/
+
+let gameTimer = new Timer({
+  tick : 1,
+  ontick : function (sec) {
+
+      let timeDifference = (gameTime*1000) - sec;
+      let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+      let seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+    
+      let secondsString = String(seconds);
+      if (seconds < 10) {
+        secondsString = '0' + secondsString;
+      }
+    
+      timerElement.textContent = ""+minutes+"m : " + secondsString+"s";
+  },
+});
 
 
 

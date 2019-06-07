@@ -7,6 +7,7 @@
     <link href="css/main.css"  rel="stylesheet" />
 
     <link href="https://fonts.googleapis.com/css?family=Inconsolata|Volkhov|Fredoka+One" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
   </head>
   <body>
@@ -32,6 +33,31 @@
 
     <main>
 
+
+      <!-- Difficulty level for main display -->
+
+      <p id="level-text-main" class="level-scalable">EASY</p>
+
+      <!-- Game info text on a single row -->
+
+      <section id="game-info">
+
+        <p id="moves-text" class="inconsolata-scalable game-text">Moves: 0</p>
+        <p id="timer-text" class="inconsolata-scalable game-text">0m : 00s</p>
+        <p id="rating-text" class="inconsolata-scalable game-text"></p>
+        <p class="inconsolata-scalable stars-part game-text">
+          <span class="fa fa-star checked"></span>
+          <span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
+          <span class="fa fa-star"></span>
+        </p>
+
+      </section>
+
+      <!-- The grid of image boxes are generated
+        dynamically in JS and placed as child elements of this div -->
+
       <section id="main-game-area">
 
 
@@ -49,7 +75,8 @@
     <footer>
       Basic footer info
     </footer>
-
+    
+    <script src="js/timer.js"></script>
     <script src="js/app.js"></script>
 
 	</body>

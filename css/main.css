@@ -215,11 +215,51 @@ Submit button in the high score modal
   letter-spacing: 1.5vw;
 }
 
+.level-scalable {
+  font-family: 'Fredoka One', cursive;
+  text-align: center;
+  font-size: calc(14px + (30 - 14) * ((100vw - 300px) / (900 - 300)));
+}
+
 .inconsolata-scalable {
   font-family: 'Inconsolata', monospace;
   font-size: calc(10px + (30 - 10) * ((100vw - 300px) / (900 - 300)));
   color: #0944c7;
 }
+
+
+/* Additional styling for game and modal text */
+
+/* To align all the game info text elements on a single line */
+#game-info {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+
+#level-text-main {
+  letter-spacing: 1vw;
+  margin: 1vh auto;
+}
+
+.game-text {
+
+  margin-top: 0;
+  margin-bottom: 1vh;
+
+}
+
+
+/* To highlight a specific star in the row of 5 stars */
+.checked {
+  color: orange;
+}
+
+
+
+
 
 /*
 Media queries to ensure that the following items and fonts do not continue to scale once the screen size reaches the earlier defined limit of 900 px.
@@ -227,7 +267,7 @@ Media queries to ensure that the following items and fonts do not continue to sc
 
 @media screen and (min-width: 900px) {
 
-  #game-title, .inconsolata-scalable {
+  #game-title, .level-scalable, .inconsolata-scalable, .verdana-scalable {
     font-size: 30px;
   }
 
