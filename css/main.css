@@ -298,6 +298,14 @@ https://www.w3schools.com/howto/howto_css_modals.asp
 
 */
 
+#normal-end-modal-content {
+  width: 50vw;
+  max-width: 450px; /* 50% of the max of 900px */
+  height: 50vw;
+  max-height: 500px;
+}
+
+
 #difficulty-modal-content {
   width: 80vw;
   max-width: 720px; /* 80% of the max of 900px */

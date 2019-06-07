@@ -235,7 +235,14 @@ otherwise a normal end of game modal is displayed
 function endGame() {
 
   gameTimer.stop();
-  console.log("end of game reached !");
+
+  let modalTimerElements  = document.getElementsByClassName("modal-time");
+
+  for (let elem of modalTimerElements) {
+    elem.textContent = timerElement.textContent;
+  }
+
+  normalEndModal.style.display = "block";
 
 
 }
@@ -525,8 +532,6 @@ let gameTimer = new Timer({
 });
 
 
-
-
 /* Get a reference to the start button and set event listener to respond
 to click events to start / restart the game
 */
@@ -582,3 +587,30 @@ for (let option of imageOptions) {
 
   });
 }
+
+
+/* Get references to the following modals
+
+normal-end-modal
+scores-modal
+
+so that we can close them once there is a click event outside the modal */
+
+let normalEndModal = document.getElementById('normal-end-modal');
+let scoresModal = document.getElementById('scores-modal');
+
+/* When a click event occurs, check whether either of the two modals referenced earlier was involved; if so close them
+*/
+
+window.onclick = function(event) {
+
+  if (event.target == normalEndModal) {
+    normalEndModal.style.display = "none";
+  }
+  if (event.target == scoresModal) {
+    scoresModal.style.display = "none";
+  }
+}
+
+
+
