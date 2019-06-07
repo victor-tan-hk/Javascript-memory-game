@@ -177,6 +177,9 @@ function startGame() {
     flipBox.addEventListener('click', doFlip);
   }  
 
+  // Start count down timer for game
+  gameTimer.start(gameTime);  
+
 }
 
 
@@ -195,6 +198,25 @@ function doFlip() {
     setTimeout(checkMatch,1000, this);
 
   }
+}
+
+/**
+* @description Handles the end of the game where all boxes are flipped
+and all symbols successfully matched.
+
+The count up is stopped and the time is displayed in the appropriate
+element in the relevant modal boxes and main game view
+
+If the time qualifies for a high score, the high score modal is displayed
+otherwise a normal end of game modal is displayed
+*/
+
+function endGame() {
+
+  gameTimer.stop();
+  console.log("end of game reached !");
+
+
 }
 
 
@@ -237,7 +259,7 @@ function checkMatch(currFlipBox) {
 
 
   if (successfulMatch == NUM_DIFF_IMAGES)
-    console.log("End of game ! All images matched !");
+    endGame();
 }
 
 /**
@@ -421,6 +443,36 @@ let starsSpan = [];
 for (let elem of starsElements) {
   starsSpan.push(elem.getElementsByTagName('span'));
 }
+
+/* Predefined game time (in secs) to assist in the count up timer
+Assume the game will never last longer than 30 mins
+*/
+
+let gameTime = 60 * 30;
+
+/* Set up count up timer functionality using the Timer.js countdown 
+timer library. To implement a count up, subtract the current countdown 
+time from gameTime.
+*/
+
+let gameTimer = new Timer({
+  tick : 1,
+  ontick : function (sec) {
+
+      let timeDifference = (gameTime*1000) - sec;
+      let minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+      let seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+    
+      let secondsString = String(seconds);
+      if (seconds < 10) {
+        secondsString = '0' + secondsString;
+      }
+    
+      timerElement.textContent = ""+minutes+"m : " + secondsString+"s";
+  },
+});
+
+
 
 
 /* Get a reference to the start button and set event listener to respond
