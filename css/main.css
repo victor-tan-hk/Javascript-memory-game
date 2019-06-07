@@ -87,7 +87,6 @@ li:hover {text-shadow: 0.2vw 0.2vh #71797c;}
 .box-row {
 
   width: 100%;
-  height: 12vw; /* should not be necessary ?? */
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -104,6 +103,17 @@ li:hover {text-shadow: 0.2vw 0.2vh #71797c;}
   max-width: 85px;
   margin: 0.7vh;
   perspective: 1000px;
+}
+
+/* This styles the dummy flip box so that it is hidden
+The dummy flip box is included as a temporary measure to
+resolve the CSS issue involving the box row and the normal
+flip-boxes
+*/
+.dummy-images {
+  width: 100%;
+  visibility: hidden;
+  border-width: 0px;
 }
 
 .flip-box-inner, .flip-box-front, .flip-box-back, .box-images {

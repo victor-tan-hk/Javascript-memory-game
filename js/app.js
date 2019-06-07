@@ -35,6 +35,27 @@ function createHTMLForFlipBox(currentBaseUrl, iconNumber) {
 
 
 /**
+* @description This creates the HTML for a dummy flip box. Used as
+a temporary measure to address the CSS styling issue for the
+row containing the flip boxes
+* @returns {string} The HTML string
+*/
+
+function createHTMLForDummyBox() {
+
+  let htmlSnippet = `
+<div class="flip-box">
+  <img src="`;
+  htmlSnippet += BOX_FRONT_IMAGE_URL;
+  htmlSnippet += `" class="dummy-images" alt="">
+</div>
+`;
+
+  return htmlSnippet;
+}
+
+
+/**
 * @description This creates the HTML for the div containing the row of
 flip-boxes
 * @returns {string} The HTML string
@@ -73,6 +94,7 @@ function createHTMLForMainGameArea() {
       gameAreaHTML += createHTMLForFlipBox(currentBaseUrl, imgNumArray[arrPos++]);
     }
 
+    gameAreaHTML += createHTMLForDummyBox();
     gameAreaHTML += `</div>`;
     //alert(gameAreaHTML);
   }
