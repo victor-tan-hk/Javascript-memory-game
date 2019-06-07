@@ -216,8 +216,6 @@ to handle the game end is called
 
 function checkMatch(currFlipBox) {
 
-  //alert('checking !');
-
   let currImgURL = currFlipBox.getElementsByTagName('img')[1].getAttribute('src');
   boxesFlipped.push(currFlipBox);
   numBoxFlipped++;
@@ -228,7 +226,7 @@ function checkMatch(currFlipBox) {
       showErrorSymbol();
   } else if (numBoxFlipped === currentLevel.numSymbolsToMatch) {
       ++successfulMatch;
-      console.log("Matched : " + successfulMatch)
+      doShake();
       resetVariables();
   }
 
@@ -244,7 +242,6 @@ original closed card symbol.
 */
 
 function showErrorSymbol() {
-  //alert(boxesFlipped.length);
 
   for (let flipBox of boxesFlipped) {
 
@@ -258,6 +255,21 @@ function showErrorSymbol() {
 
 }
 
+
+/**
+* @description Tags the open flipped boxes with the do-shake class label
+in order to start the CSS shake animation to indicate a successful match
+in the symbols on all these boxes
+*/
+
+function doShake() {
+
+  for (let flipBox of boxesFlipped) {
+    let imgToShake = flipBox.getElementsByTagName('img')[1];
+    imgToShake.classList.add('do-shake');
+  }
+
+}
 
 /**
 * @description Resets the image on the back of the flip box
