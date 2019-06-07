@@ -246,13 +246,33 @@ original closed card symbol.
 function showErrorSymbol() {
   //alert(boxesFlipped.length);
 
-  console.log("Error ! No match");
+  for (let flipBox of boxesFlipped) {
+
+    let currImgURL = flipBox.getElementsByTagName('img')[1].getAttribute('src');
+    flipBox.getElementsByTagName('img')[1].setAttribute('src', ERROR_IMAGE_URL);
+    setTimeout(doFlipBack,1000,flipBox,currImgURL);
+
+  }
 
   resetVariables();
 
-
-
 }
+
+
+/**
+* @description Resets the image on the back of the flip box
+to its original image
+* @param {Element object} flipBox
+* @param {string} currImgURL
+*/
+
+function doFlipBack(flipBox,currImgURL) {
+  flipBox.classList.remove('flipped');
+  flipBox.getElementsByTagName('img')[1].setAttribute('src', currImgURL);
+}
+
+
+
 
 /**
 * @description Resets the two variables used to keep track of the number of boxes
