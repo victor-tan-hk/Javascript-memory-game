@@ -481,3 +481,20 @@ to click events to start / restart the game
 
 let startButton = document.getElementById('start-button');
 startButton.addEventListener('click', startGame);
+
+/*
+Get references to the li for the game options available from the drop down menu
+Set click events for these options to open up the appropriate modal boxes
+Append the name of the menu option to -modal to get the name of the matching element
+*/
+
+let menuOptions = document.querySelectorAll(".dropdown-content ul li");
+let modalToOpen;
+
+for (let option of menuOptions) {
+  option.addEventListener('click', function() {
+    modalToOpen = document.getElementById(this.textContent.toLowerCase() + '-modal');
+    modalToOpen.style.display = "block";
+
+  });
+}
