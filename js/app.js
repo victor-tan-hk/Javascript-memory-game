@@ -167,7 +167,28 @@ of an existing game.
 
 function startGame() {
 
-  console.log("awesome");
+  /*Reset all relevant variables*/
+  numBoxFlipped = 0;
+  imgToMatch = '';
+  boxesFlipped = [];
+  successfulMatch = 0;
+  matchAverage = 0.0;
+  gameStarted = true;
+  numMoves = 0;
+
+  // Stop the count down timer
+  // in case this is a reset from an existing game
+  gameTimer.stop();
+  
+  difficultyElement.textContent = currentLevel.name;
+  movesElement.textContent = "Moves: 0";
+  timerElement.textContent = "0m : 00s";
+  startButton.textContent = "Restart";
+
+  // Reset the star ratings for both the main and modal display
+  resetStars();  
+  
+  
   createHTMLForMainGameArea();
 
   // Set an event listener on all the boxes in the grid in the
@@ -378,6 +399,20 @@ function resetVariables() {
   boxesFlipped.length = 0;
 }
 
+/**
+* @description Reset the stars for all modal boxes as well as the main game
+play area that they appear in
+*/
+
+function resetStars() {
+
+  for (let theStars of starsSpan) {
+    for (let arrPos = 1; arrPos < theStars.length; arrPos++) {
+      if (theStars[arrPos].classList.contains("checked"))
+        theStars[arrPos].classList.remove("checked");
+    }
+  }
+}
 
 /* Global variables */
 
