@@ -130,6 +130,10 @@ flip-boxes
   transform-style: preserve-3d;
 }
 
+.flipped {
+  transform: rotateY(180deg);
+}
+
 /* Position the front and back side */
 .flip-box-front, .flip-box-back {
   position: fixed;

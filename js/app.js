@@ -170,8 +170,29 @@ function startGame() {
   console.log("awesome");
   createHTMLForMainGameArea();
 
+  // Set an event listener on all the boxes in the grid in the
+  // main game play area
+  flipBoxes = document.getElementsByClassName('flip-box-inner');
+  for (let flipBox of flipBoxes) {
+    flipBox.addEventListener('click', doFlip);
+  }  
+
 }
 
+
+/**
+* @description Performs the flip animation on a clicked flip box
+by adding flipped to its class attribute so that the appropiate
+CSS animation is activated. Sets a timeout for checking whether
+this box matches with existing flipped boxes.
+*/
+
+function doFlip() {
+
+  if (!this.classList.contains('flipped')) {
+    this.classList.add('flipped');
+  }
+}
 
 /* Global variables */
 
