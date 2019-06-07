@@ -190,6 +190,7 @@ this box matches with existing flipped boxes.
 function doFlip() {
 
   if (!this.classList.contains('flipped')) {
+    movesElement.textContent = "Moves: "+ ++numMoves;
     this.classList.add('flipped');
     setTimeout(checkMatch,1000, this);
 
@@ -348,7 +349,11 @@ let numMoves = 0;
 let flipBoxes;
 let posToInsertHighScore;
 
-
+/* Get reference to the elements that will be used to display info during game play */
+let difficultyElement = document.getElementById("level-text-main");
+let timerElement = document.getElementById("timer-text");
+let movesElement = document.getElementById("moves-text");
+let ratingElement = document.getElementById("rating-text");
 
 
 /* Get a reference to the start button and set event listener to respond
