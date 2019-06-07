@@ -167,7 +167,28 @@ of an existing game.
 
 function startGame() {
 
-  console.log("awesome");
+  /*Reset all relevant variables*/
+  numBoxFlipped = 0;
+  imgToMatch = '';
+  boxesFlipped = [];
+  successfulMatch = 0;
+  matchAverage = 0.0;
+  gameStarted = true;
+  numMoves = 0;
+
+  // Stop the count down timer
+  // in case this is a reset from an existing game
+  gameTimer.stop();
+  
+  difficultyElement.textContent = currentLevel.name;
+  movesElement.textContent = "Moves: 0";
+  timerElement.textContent = "0m : 00s";
+  startButton.textContent = "Restart";
+
+  // Reset the star ratings for both the main and modal display
+  resetStars();  
+  
+  
   createHTMLForMainGameArea();
 
   // Set an event listener on all the boxes in the grid in the
@@ -378,9 +399,32 @@ function resetVariables() {
   boxesFlipped.length = 0;
 }
 
+/**
+* @description Reset the stars for all modal boxes as well as the main game
+play area that they appear in
+*/
+
+function resetStars() {
+
+  for (let theStars of starsSpan) {
+    for (let arrPos = 1; arrPos < theStars.length; arrPos++) {
+      if (theStars[arrPos].classList.contains("checked"))
+        theStars[arrPos].classList.remove("checked");
+    }
+  }
+}
 
 /* Global variables */
 
+
+/* Constant used for the icon group game settings */
+
+const ICON_GROUPS = [
+  {name:"SOCIAL", symbolImageBaseUrl : 'images/social/', },
+  {name:"FOOD", symbolImageBaseUrl : 'images/food/', },
+  {name:"FUN", symbolImageBaseUrl : 'images/fun/', },
+
+];
 
 /* Variables to keep track of the current difficulty and
 image base directory for the selected icon group
@@ -481,3 +525,44 @@ to click events to start / restart the game
 
 let startButton = document.getElementById('start-button');
 startButton.addEventListener('click', startGame);
+
+/*
+Get references to the li for the game options available from the drop down menu
+Set click events for these options to open up the appropriate modal boxes
+Append the name of the menu option to -modal to get the name of the matching element
+*/
+
+let menuOptions = document.querySelectorAll(".dropdown-content ul li");
+let modalToOpen;
+
+for (let option of menuOptions) {
+  option.addEventListener('click', function() {
+    modalToOpen = document.getElementById(this.textContent.toLowerCase() + '-modal');
+    modalToOpen.style.display = "block";
+
+  });
+}
+
+/*
+Get references to the icon selections available from the modal boxes for the 2 menu options (Difficulty and Icons)
+For Difficulty, set click events for the corresponding options to restart the game at the appropriate level
+For Icons, set click events for the corresponding options to choose a different image URL base path and restart the game at the current level */
+
+let imageOptions = document.getElementsByClassName("modal-selections");
+for (let option of imageOptions) {
+  option.addEventListener('click', function() {
+
+    modalToOpen.style.display = "none";
+
+    let chosenOption = this.querySelector("p").textContent;
+
+    for (let group of ICON_GROUPS) {
+      if (group.name === chosenOption) {
+        currentBaseUrl = group.symbolImageBaseUrl;
+        startGame();
+      }
+    }
+
+
+  });
+}
