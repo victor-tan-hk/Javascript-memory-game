@@ -231,8 +231,67 @@ function checkMatch(currFlipBox) {
       resetVariables();
   }
 
+  matchAverage = Math.floor(successfulMatch/numMoves*100);
+
+  doStarsHighlight();
+
+
   if (successfulMatch == NUM_DIFF_IMAGES)
     console.log("End of game ! All images matched !");
+}
+
+/**
+* @description Highlight the stars for all modal boxes as well as the game view
+that they appear in.
+
+matchAverage = successfulMatches / numMoves * 100
+
+Since the fastest a successful match can occur is in 2 moves (for the case of
+2 consecutive symbols), the highest possible value for matchAverage at any
+single time is 50.
+
+The stars highlighted depend on the value of matchAverage
+
+10-19: 2
+20-29: 3
+30-39: 4
+40-50: 5
+
+There is at least one star highlighted regardless of the value of matchAverage
+
+//TODO: need to further refine the matchAverage scale above for the case of 3
+ (Difficulty: HARD) and 4 (Difficulty: INSANE) consecutive matches.
+ For e.g. the fastest a successful match can occur is 3 moves for the case of
+ 3 consecutive symbols, which means the highest possible value of matchAverage
+ is 33.33. The range for the 5 stars must then fall in that category, e.g.
+
+ 6 - 12: 2
+ 13 - 18: 3
+ 19 - 25: 4
+ 26 - 33: 5
+
+ Equivalent comments apply as well for 4 consecutive matches.
+
+*/
+
+function doStarsHighlight() {
+
+  for (let theStars of starsSpan) {
+
+    for (let arrPos = 1; arrPos < theStars.length; arrPos++) {
+
+      if (matchAverage >= (arrPos*10) ) {
+        if (!theStars[arrPos].classList.contains("checked"))
+          theStars[arrPos].classList.add("checked");
+      } else {
+        if (theStars[arrPos].classList.contains("checked"))
+          theStars[arrPos].classList.remove("checked");
+      }
+
+    }
+
+  }
+
 }
 
 
@@ -354,6 +413,14 @@ let difficultyElement = document.getElementById("level-text-main");
 let timerElement = document.getElementById("timer-text");
 let movesElement = document.getElementById("moves-text");
 let ratingElement = document.getElementById("rating-text");
+
+/* Get reference to the span element for all  5 stars for all occurrences of  this icon in the HTML */
+
+let starsElements = document.getElementsByClassName("stars-part");
+let starsSpan = [];
+for (let elem of starsElements) {
+  starsSpan.push(elem.getElementsByTagName('span'));
+}
 
 
 /* Get a reference to the start button and set event listener to respond

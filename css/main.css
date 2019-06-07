@@ -252,7 +252,10 @@ Submit button in the high score modal
 }
 
 
-
+/* To highlight a specific star in the row of 5 stars */
+.checked {
+  color: orange;
+}
 
 
 
