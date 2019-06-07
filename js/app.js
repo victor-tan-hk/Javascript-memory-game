@@ -382,6 +382,15 @@ function resetVariables() {
 /* Global variables */
 
 
+/* Constant used for the icon group game settings */
+
+const ICON_GROUPS = [
+  {name:"SOCIAL", symbolImageBaseUrl : 'images/social/', },
+  {name:"FOOD", symbolImageBaseUrl : 'images/food/', },
+  {name:"FUN", symbolImageBaseUrl : 'images/fun/', },
+
+];
+
 /* Variables to keep track of the current difficulty and
 image base directory for the selected icon group
 */
@@ -495,6 +504,30 @@ for (let option of menuOptions) {
   option.addEventListener('click', function() {
     modalToOpen = document.getElementById(this.textContent.toLowerCase() + '-modal');
     modalToOpen.style.display = "block";
+
+  });
+}
+
+/*
+Get references to the icon selections available from the modal boxes for the 2 menu options (Difficulty and Icons)
+For Difficulty, set click events for the corresponding options to restart the game at the appropriate level
+For Icons, set click events for the corresponding options to choose a different image URL base path and restart the game at the current level */
+
+let imageOptions = document.getElementsByClassName("modal-selections");
+for (let option of imageOptions) {
+  option.addEventListener('click', function() {
+
+    modalToOpen.style.display = "none";
+
+    let chosenOption = this.querySelector("p").textContent;
+
+    for (let group of ICON_GROUPS) {
+      if (group.name === chosenOption) {
+        currentBaseUrl = group.symbolImageBaseUrl;
+        startGame();
+      }
+    }
+
 
   });
 }
