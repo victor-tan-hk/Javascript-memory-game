@@ -1,3 +1,57 @@
+/**
+* @description This shuffles the numbers in an integer array using a customized algorithm, instead of the standard Fisher-Yates (Knuth) Shuffle. This algorithm relies on the numbers in the array BEING POSITIVE !
+
+* @param {array} array
+* @returns {array} Array of shuffled numbers
+*/
+
+function shuffle(array) {
+  let newArray = [];
+  for (let i = 0; i < array.length; i++) {
+      newArray[i] = -1;
+  }
+
+  let posToPlace;
+  for (let arrPos = 0; arrPos < array.length; arrPos++) {
+      posToPlace = Math.floor(Math.random() * (array.length - arrPos));  
+      let fillPos = 0;
+      for (let newArrayPos = 0; newArrayPos < array.length; newArrayPos++) {
+          if (newArray[newArrayPos] < 0) {
+              if (fillPos === posToPlace) {
+                  newArray[newArrayPos] = array[arrPos];
+                  break;
+              }
+              fillPos++;    
+          }
+      }
+      
+  }
+
+  return newArray;
+}
+
+
+
+/**
+* @description This generates an initial array containing the numbers to be reshuffled. Each number corresponds to a specific symbol to be matched on the
+flipbox. Each number is generated numSymbolsToMatch times
+* @returns {array} An array of integers
+*/
+
+function generateArrayRandomNumbers() {
+
+  let numArr = [];
+  let arrPos = 0;
+  for (let i = 0; i < currentLevel.numSymbolsToMatch; i++) {
+    for (let j = 1; j <= NUM_DIFF_IMAGES; j++) {
+      numArr[arrPos++] = j;
+    }
+  }
+  let shuffledArray = shuffle(numArr);
+  return shuffledArray;
+
+}
+
 
 
 /**
@@ -79,7 +133,7 @@ section for this area
 function createHTMLForMainGameArea() {
 
 
-  let imgNumArray = [1,2,3,4,5,6,7,8,1,2,3,4,5,6,7,8];
+  let imgNumArray = generateArrayRandomNumbers();
 
   let numBoxesPerRow = currentLevel.numSymbolsToMatch * NUM_DIFF_IMAGES / TOTAL_ROWS;
   let gameAreaHTML = '';
