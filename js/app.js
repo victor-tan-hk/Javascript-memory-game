@@ -170,6 +170,130 @@ function startGame() {
   console.log("awesome");
   createHTMLForMainGameArea();
 
+  // Set an event listener on all the boxes in the grid in the
+  // main game play area
+  flipBoxes = document.getElementsByClassName('flip-box-inner');
+  for (let flipBox of flipBoxes) {
+    flipBox.addEventListener('click', doFlip);
+  }  
+
+}
+
+
+/**
+* @description Performs the flip animation on a clicked flip box
+by adding flipped to its class attribute so that the appropiate
+CSS animation is activated. Sets a timeout for checking whether
+this box matches with existing flipped boxes.
+*/
+
+function doFlip() {
+
+  if (!this.classList.contains('flipped')) {
+    this.classList.add('flipped');
+    setTimeout(checkMatch,1000, this);
+
+  }
+}
+
+
+/**
+* @description Check whether the most recently flipped box (currFlipBox)
+has a symbol that matches the existing flipped boxes. It then calls the
+appropriate function to handle the case of
+
+- a mismatch
+- a successful match for the predefined number of consecutive symbols (2,3 or 4)
+
+It computes the match average and calls the function to highlight the appropriate number of stars for this average
+
+If all boxes are flipped and all symbols are successfully matched, the function
+to handle the game end is called
+
+* @param {Element} currFlipBox
+*/
+
+
+function checkMatch(currFlipBox) {
+
+  let currImgURL = currFlipBox.getElementsByTagName('img')[1].getAttribute('src');
+  boxesFlipped.push(currFlipBox);
+  numBoxFlipped++;
+
+  if (numBoxFlipped == 1) {
+    imgToMatch = currImgURL;
+  } else if (currImgURL !== imgToMatch) {
+      showErrorSymbol();
+  } else if (numBoxFlipped === currentLevel.numSymbolsToMatch) {
+      ++successfulMatch;
+      doShake();
+      resetVariables();
+  }
+
+  if (successfulMatch == NUM_DIFF_IMAGES)
+    console.log("End of game ! All images matched !");
+}
+
+
+/**
+* @description Puts an error image on the existing flipped boxes whose
+symbols do not match. Sets a timeout to flip these boxes back to the
+original closed card symbol.
+*/
+
+function showErrorSymbol() {
+
+  for (let flipBox of boxesFlipped) {
+
+    let currImgURL = flipBox.getElementsByTagName('img')[1].getAttribute('src');
+    flipBox.getElementsByTagName('img')[1].setAttribute('src', ERROR_IMAGE_URL);
+    setTimeout(doFlipBack,1000,flipBox,currImgURL);
+
+  }
+
+  resetVariables();
+
+}
+
+
+/**
+* @description Tags the open flipped boxes with the do-shake class label
+in order to start the CSS shake animation to indicate a successful match
+in the symbols on all these boxes
+*/
+
+function doShake() {
+
+  for (let flipBox of boxesFlipped) {
+    let imgToShake = flipBox.getElementsByTagName('img')[1];
+    imgToShake.classList.add('do-shake');
+  }
+
+}
+
+/**
+* @description Resets the image on the back of the flip box
+to its original image
+* @param {Element object} flipBox
+* @param {string} currImgURL
+*/
+
+function doFlipBack(flipBox,currImgURL) {
+  flipBox.classList.remove('flipped');
+  flipBox.getElementsByTagName('img')[1].setAttribute('src', currImgURL);
+}
+
+
+
+
+/**
+* @description Resets the two variables used to keep track of the number of boxes
+that have been flipped as well as the references to those flipped boxes
+*/
+
+function resetVariables() {
+  numBoxFlipped = 0;
+  boxesFlipped.length = 0;
 }
 
 
