@@ -150,7 +150,6 @@ function createHTMLForMainGameArea() {
 
     gameAreaHTML += createHTMLForDummyBox();
     gameAreaHTML += `</div>`;
-    //alert(gameAreaHTML);
   }
   gameAreaElement.innerHTML = gameAreaHTML;
 
@@ -572,11 +571,7 @@ name entered in the high score modal box, then closes the modal box
 
 function updateHighScoreList() {
 
-//  alert("you entered value : " + userName.value);
-//  alert("inserting at position : " + posToInsertHighScore);
   let newScoreItem = {name: userName.value,score: timerElement.textContent};
-//  alert (newScoreItem.name);
-//  alert (newScoreItem.score);
 
   currentLevel.highScoreList.splice(posToInsertHighScore, 0, newScoreItem);
 
@@ -619,8 +614,6 @@ function saveHighScoreList() {
 
     let nameToStore = currentLevel.name + arrPos;
     let valueToStore = JSON.stringify(currentLevel.highScoreList[arrPos]);
-    //alert ("name : " + nameToStore);
-    //alert ("valueToStore : " + valueToStore);
     localStorage.setItem(nameToStore, valueToStore);
   }
 
