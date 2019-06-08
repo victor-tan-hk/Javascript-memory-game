@@ -507,6 +507,28 @@ function findPosToInsert(currentScore) {
   return -1;
 }
 
+/**
+* @description Displays the high score lists for all
+levels using console.log(). Used only in testing and development
+of the game.
+*/
+
+function showHighScoreList() {
+
+  for (level of DIFFICULTY_LEVELS) {
+    console.log(level.name);
+    for (let arrPos = 0; arrPos < MAX_SCORE_ITEMS; arrPos++) {
+      myScore = level.highScoreList[arrPos].score;
+      if (myScore)
+        console.log("" + arrPos + " : " + myScore);
+      else
+        console.log("" + arrPos + " : no score");
+    }
+  }
+}
+
+
+
 
 /**
 * @description This function updates the appropriate HTML elements
@@ -540,6 +562,28 @@ function updateHighScoreTables() {
 
 }
 
+
+/**
+* @description This function updates the high score list of the current
+difficulty level with the time score of the current game and the user
+name entered in the high score modal box, then closes the modal box
+
+*/
+
+function updateHighScoreList() {
+
+//  alert("you entered value : " + userName.value);
+//  alert("inserting at position : " + posToInsertHighScore);
+  let newScoreItem = {name: userName.value,score: timerElement.textContent};
+//  alert (newScoreItem.name);
+//  alert (newScoreItem.score);
+
+  currentLevel.highScoreList.splice(posToInsertHighScore, 0, newScoreItem);
+
+  highScoreEndModal.style.display = "none";
+}
+
+
 /**
 * @description This function loads the high score lists with the existing
 values stored from previous games in the same browser using JS
@@ -551,13 +595,36 @@ function loadHighScoreLists() {
   for (let level of DIFFICULTY_LEVELS) {
 
     for (let arrPos = 0; arrPos < MAX_SCORE_ITEMS; arrPos++) {
-      level.highScoreList[arrPos] = {name: '',score: ''};
-      
+
+      let nameToRetrieve = level.name + arrPos;
+      let itemRetrieved = localStorage.getItem(nameToRetrieve);
+      if (itemRetrieved) {
+        level.highScoreList[arrPos] = JSON.parse(itemRetrieved);
+      } else {
+        level.highScoreList[arrPos] = {name: '',score: ''};
+      }
     }
   }
 
 }
 
+/**
+* @description This function stores the high score list for the current
+difficulty level into the browser using JS localStorage.
+*/
+
+function saveHighScoreList() {
+
+  for (let arrPos = 0; arrPos < MAX_SCORE_ITEMS; arrPos++) {
+
+    let nameToStore = currentLevel.name + arrPos;
+    let valueToStore = JSON.stringify(currentLevel.highScoreList[arrPos]);
+    //alert ("name : " + nameToStore);
+    //alert ("valueToStore : " + valueToStore);
+    localStorage.setItem(nameToStore, valueToStore);
+  }
+
+}
 
 
 /* Global variables */
@@ -681,6 +748,7 @@ let gameTimer = new Timer({
 // Initialize the high score lists and update the tables with it
 
 loadHighScoreLists();
+showHighScoreList();
 updateHighScoreTables();
 
 /* Get a reference to the start button and set event listener to respond
