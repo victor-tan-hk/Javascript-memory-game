@@ -1,4 +1,5 @@
-![logo](images/brainlogo.jpg) 
+<img src="images/brainlogo.jpg" alt="game logo" title="Game Logo" width="100" height="100" /> 
+
 # MEMORY GAME
 
 Memory game is an implementation of the classic game where the player attempts to achieve matching consecutive symbols by flipping selected cards that are initially face down.
