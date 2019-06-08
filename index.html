@@ -33,6 +33,46 @@
 
     <main>
 
+      <!-- Modal for normal game end without a high score -->
+      <div id="normal-end-modal" class="modal-background">
+        <div id="normal-end-modal-content" class="modal-content">
+          <img class="modal-logo" src="images/correct.png" alt="Logo for normal game end">
+          <p class="verdana-scalable modal-text">Time :</p>
+          <p class="inconsolata-scalable modal-text modal-time"></p>
+          <p class="verdana-scalable modal-text">Rating :</p>
+          <p class="inconsolata-scalable modal-text stars-part">
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+          </p>
+        </div>
+      </div>
+
+      <!-- Modal for game end with a high score -->
+      <div id="highscore-end-modal" class="modal-background">
+        <div id="highscore-end-modal-content" class="modal-content">
+          <img class="modal-logo" src="images/trophy.jpg" alt="Logo for high score box">
+          <p class="verdana-scalable modal-text">Time :</p>
+          <p class="inconsolata-scalable modal-text modal-time"></p>
+          <p class="verdana-scalable modal-text">Rating :</p>
+          <p class="inconsolata-scalable modal-text stars-part">
+            <span class="fa fa-star checked"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+            <span class="fa fa-star"></span>
+          </p>
+            <p class="verdana-scalable modal-text">High Score</p>
+          <form class="verdana-scalable modal-text">
+            Enter Name:
+            <input class="verdana-scalable" type="text" maxlength="7" size="7" id="user-name">
+          </form>
+          <button id="submit-button" class="button-style">Submit</button>
+        </div>
+      </div>      
+
 
       <!-- Modal for selecting difficulty -->
       <div id="difficulty-modal" class="modal-background">
@@ -86,6 +126,98 @@
           </div>
         </div>
       </div>
+
+
+      <!-- Modal for high score -->
+      <div id="scores-modal" class="modal-background">
+        <div id="score-modal-content" class="modal-content">
+          <p class="verdana-scalable modal-text">High Scores</p>
+
+          <div class="modal-image-row">
+
+            <div class="table-groups">
+              <table id="EASY-table" class="table-text-scalable">
+                <tr>
+                  <th></th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Time</th>
+                  </tr>
+                <tr>
+                  <th scope="row">1.</th>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">2.</th>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">3.</th>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </table>
+              <p class="level-scalable level-text-modal">EASY</p>
+            </div>
+
+            <div class="table-groups">
+              <table id="HARD-table" class="table-text-scalable">
+                <tr>
+                <th></th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Time</th>
+                </tr>
+                <tr>
+                  <th scope="row">1.</th>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">2. </th>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">3.</th>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </table>
+              <p class="level-scalable level-text-modal">HARD</p>
+            </div>
+
+            <div class="table-groups">
+              <table id="INSANE-table" class="table-text-scalable">
+                <tr>
+                <th></th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Time</th>
+                </tr>
+                <tr>
+                  <th scope="row">1.</th>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">2. </th>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <th scope="row">3.</th>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </table>
+
+              <p class="level-scalable level-text-modal">INSANE</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
 
 
       <!-- Difficulty level for main display -->

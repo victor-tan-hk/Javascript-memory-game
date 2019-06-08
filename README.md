@@ -37,8 +37,9 @@ These features are accessible from the game icon at the upper right hand corner.
    - Hard: The player needs to match icons on 3 consecutively flipped cards. There are a total of 3 x 8 = 24 cards
    - Insane: The player needs to match icons on 4 consecutively flipped cards. There are a total of 4 x 8 = 32 cards
 
+2. *High scores*: The top 3 lowest times are recorded and saved for each difficulty level
 
-2. *Icon family*: The player can select between 3 different icon families: each family has a different set of 8 icons that follow a particular theme. This adds variety to the game play.
+3. *Icon family*: The player can select between 3 different icon families: each family has a different set of 8 icons that follow a particular theme. This adds variety to the game play.
 
 
 ## Running the game
